@@ -1,48 +1,48 @@
 <?php
+require_once __DIR__ . '/vendor/autoload.php';
 
-ini_set("allow_url_fopen",1);
+use Symfony\Component\HttpFoundation\Request;
 
-$file = 'people.txt';
+$app = new Silex\Application();
 
-// 新しい人物をファイルに追加します
-$current .= "John Smith\n";
+$app->post('/callback', function (Request $request) use ($app) {
+    $client = new GuzzleHttp\Client();
 
+    $body = json_decode($request->getContent(), true);
+    foreach ($body['result'] as $msg) {
+        if (!preg_match('/(ぬるぽ|ヌルポ|ﾇﾙﾎﾟ|nullpo)/i', $msg['content']['text'])) {
+            continue;
+        }
 
-$json_string = file_get_contents('php://input');
-$jsonObj = json_decode($json_string);
-$to = $jsonObj->{"result"}[0]->{"content"}->{"from"};
+        $resContent = $msg['content'];
+        $resContent['text'] = 'ｶﾞｯ';
 
-// テキストで返事をする場合
-$response_format_text = ['contentType'=>1,"toType"=>1,"text"=>"hello"];
-// 画像で返事をする場合
-$response_format_image = ['contentType'=>2,"toType"=>1,'originalContentUrl'=>"画像URL","previewImageUrl"=>"サムネイル画像URL"];
-// 他にも色々ある
-// ....
+        $requestOptions = [
+            'body' => json_encode([
+                'to' => [$msg['content']['from']],
+                'toChannel' => 1383378250, # Fixed value
+                'eventType' => '138311608800106203', # Fixed value
+                'content' => $resContent,
+            ]),
+            'headers' => [
+                'Content-Type' => 'application/json; charset=UTF-8',
+                'X-Line-ChannelID' => getenv('LINE_CHANNEL_ID'),
+                'X-Line-ChannelSecret' => getenv('LINE_CHANNEL_SECRET'),
+                'X-Line-Trusted-User-With-ACL' => getenv('LINE_CHANNEL_MID'),
+            ],
+            'proxy' => [
+                'https' => getenv('FIXIE_URL'),
+            ],
+        ];
 
-// toChannelとeventTypeは固定値なので、変更不要。
-$post_data = ["to"=>[$to],"toChannel"=>"1383378250","eventType"=>"138311608800106203","content"=>$response_format_text];
+        try {
+            $client->request('post', 'https://trialbot-api.line.me/v1/events', $requestOptions);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+        }
+    }
 
-//
+    return 'OK';
+});
 
-
-$ch = curl_init("https://trialbot-api.line.me/v1/events");
-
-// 結果をファイルに書き出します
-//file_put_contents($file, $current);
-
-
-curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post_data));
-curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-    'Content-Type: application/json; charser=UTF-8',
-    'X-Line-ChannelID: 1462191363',
-    'X-Line-ChannelSecret: c764f2b4d9782f440505970c3b6513ca',
-    'X-Line-Trusted-User-With-ACL: udd46d2d93a3d7bf5a0a1e95436d29680'
-    ));
-    
-
-
-$result = curl_exec($ch);
-curl_close($ch);
+$app->run();
