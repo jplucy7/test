@@ -1,4 +1,5 @@
 <?php
+/*
 $json_string = file_get_contents('php://input');
 $jsonObj = json_decode($json_string);
 $to = $jsonObj->{"result"}[0]->{"content"}->{"from"};
@@ -28,8 +29,8 @@ curl_setopt($ch, CURLOPT_PROXYPORT, '80');
 curl_setopt($ch, CURLOPT_PROXY, 'http://fixie:ivM1p3nHCezmaWX@velodrome.usefixie.com');
 $result = curl_exec($ch);
 curl_close($ch);
+*/
 
-/*
 require_once('LineBot.php');
 
 // LINE:チャンネルID
