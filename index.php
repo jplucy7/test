@@ -33,9 +33,6 @@ curl_close($ch);
 */
 
 
-
-require_once('LineBot.php');
-
 /*
 // LINE:チャンネルID
 $CHANNEL_ID = '1462191363';
@@ -53,7 +50,6 @@ $stdout= fopen( 'php://stdout', 'w' );
 fwrite( $stdout, "hello world to stdout\n" );
 */
 
-<?php
 require_once('LineBot.php');
 // LINE:チャンネルID
 $CHANNEL_ID = '1462191363';
