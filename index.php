@@ -47,4 +47,3 @@ $bot->sendText('「%s」デスネ...');
 
 $stdout= fopen( 'php://stdout', 'w' );
 fwrite( $stdout, "hello world to stdout\n" );
-*/
