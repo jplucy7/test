@@ -41,3 +41,6 @@ $bot = new LineBot($CHANNEL_ID, $CHANNEL_SECRET, $CHANNEL_MID);
 
 // テキスト送信
 $bot->sendText('「%s」デスネ...');
+
+$stdout= fopen( 'php://stdout', 'w' );
+fwrite( $stdout, "hello world to stdout\n" );
