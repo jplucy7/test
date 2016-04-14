@@ -123,6 +123,8 @@ class LineBot
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post_data));
         curl_setopt($ch, CURLOPT_HTTPHEADER, $this->response_header);
+        curl_setopt($ch, CURLOPT_PROXYPORT, '80');
+        curl_setopt($ch, CURLOPT_PROXY, 'http://fixie:ivM1p3nHCezmaWX@velodrome.usefixie.com');
         $result = curl_exec($ch);
         curl_close($ch);
 
