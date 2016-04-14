@@ -1,5 +1,4 @@
 <?php
-/*
 $json_string = file_get_contents('php://input');
 $jsonObj = json_decode($json_string);
 $to = $jsonObj->{"result"}[0]->{"content"}->{"from"};
@@ -12,7 +11,7 @@ $response_format_image = ['contentType'=>2,"toType"=>1,'originalContentUrl'=>"ht
 // ....
 
 // toChannelとeventTypeは固定値なので、変更不要。
-$post_data = ["to"=>[$to],"toChannel"=>"1383378250","eventType"=>"138311608800106203","content"=>$response_format_image];
+$post_data = ["to"=>[$to],"toChannel"=>"1383378250","eventType"=>"138311608800106203","content"=>$response_format_text];
 
 $ch = curl_init("https://trialbot-api.line.me/v1/events");
 curl_setopt($ch, CURLOPT_POST, true);
@@ -29,7 +28,7 @@ curl_setopt($ch, CURLOPT_PROXYPORT, '80');
 curl_setopt($ch, CURLOPT_PROXY, 'http://fixie:ivM1p3nHCezmaWX@velodrome.usefixie.com');
 $result = curl_exec($ch);
 curl_close($ch);
-*/
+/*
 
 require_once('LineBot.php');
 
@@ -47,3 +46,4 @@ $bot->sendText('「%s」デスネ...');
 
 $stdout= fopen( 'php://stdout', 'w' );
 fwrite( $stdout, "hello world to stdout\n" );
+*/
