@@ -32,10 +32,11 @@ $result = curl_exec($ch);
 curl_close($ch);
 */
 
-/*
+
 
 require_once('LineBot.php');
 
+/*
 // LINE:チャンネルID
 $CHANNEL_ID = '1462191363';
 // LINE:チャンネルシークレット
