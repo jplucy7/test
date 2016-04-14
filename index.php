@@ -24,6 +24,8 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
     'X-Line-ChannelSecret: c764f2b4d9782f440505970c3b6513ca',
     'X-Line-Trusted-User-With-ACL: udd46d2d93a3d7bf5a0a1e95436d29680'
     ));
+curl_setopt($ch, CURLOPT_PROXYPORT, '80');
+curl_setopt($ch, CURLOPT_PROXY, 'http://fixie:ivM1p3nHCezmaWX@velodrome.usefixie.com');
 $result = curl_exec($ch);
 curl_close($ch);
 
